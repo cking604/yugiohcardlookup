@@ -13,18 +13,14 @@ const getCards = (searchTerm?: string): Observable<CardApiResponse> => {
       }`,
     )
       .then(res => {
-        console.log('response received');
         return res.json();
       })
       .then(data => {
-        console.log('json converted');
         subscriber.next(data);
         subscriber.complete();
       })
       .catch(err => {
-        console.log('fetch err');
-        console.log(err);
-        subscriber.error('sending err');
+        subscriber.error(err);
       });
   });
   return obs;

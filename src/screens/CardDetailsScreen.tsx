@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import getCardById from '../services/getCardById';
+import {CardApiResponse} from '../types/CardApiResponse';
 import CardData from '../types/CardData';
 import {StackList} from '../types/StackList';
 
@@ -30,14 +31,7 @@ const CardDetailsScreen = ({route, navigation}: CardDetailsScreenProp) => {
     const infoObs = getCardById(id);
     infoObs.subscribe({
       next(data) {
-        console.log(data);
-        setCardData((data as any).data[0]);
-      },
-      error(err) {
-        console.log('error' + err);
-      },
-      complete() {
-        console.log('done');
+        setCardData((data as CardApiResponse).data[0]);
       },
     });
   }, []);

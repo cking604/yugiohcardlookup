@@ -53,8 +53,6 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
 
   useEffect(() => {
     const unsub = rxSubject.pipe(debounceTime(1000)).subscribe(searchTerm => {
-      console.log('new search term');
-      console.log(searchTerm);
       setSearch(searchTerm);
     });
     return () => {
@@ -66,26 +64,13 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
     const cardsObs = getCards(search);
     const subscriber = cardsObs.subscribe({
       next(data) {
-        console.log('obs received');
-        console.log(data);
         setCards(data.data);
-      },
-      error(err) {
-        console.log('error' + err);
-      },
-      complete() {
-        console.log('done');
       },
     });
     return () => {
       subscriber.unsubscribe();
     };
   }, [search]);
-
-  useEffect(() => {
-    console.log('cards:');
-    console.log(cards);
-  }, [cards]);
 
   const searchInput = () => {
     return (
