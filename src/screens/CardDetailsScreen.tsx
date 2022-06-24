@@ -157,8 +157,10 @@ const CardDetailsScreen = ({route, navigation}: CardDetailsScreenProp) => {
                 <Text style={{fontSize: 16, paddingTop: 16, fontWeight: '600'}}>
                   Sets
                 </Text>
-                {cardData.card_sets.map(set => (
-                  <Text style={{paddingLeft: 8}}>- {set.set_name}</Text>
+                {cardData.card_sets.map((set, index) => (
+                  <Text key={'set-' + index} style={{paddingLeft: 8}}>
+                    - {set.set_name}
+                  </Text>
                 ))}
               </View>
             )}

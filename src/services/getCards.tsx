@@ -1,9 +1,5 @@
 import {Observable} from 'rxjs';
-import CardData from '../types/CardData';
-
-type CardApiResponse = {
-  data: CardData[];
-};
+import {CardApiResponse} from '../types/CardApiResponse';
 
 const getCards = (searchTerm?: string): Observable<CardApiResponse> => {
   const obs = new Observable<CardApiResponse>(subscriber => {

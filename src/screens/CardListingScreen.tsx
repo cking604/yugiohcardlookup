@@ -72,7 +72,7 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
         stats.push(<Text>Link-{item.linkval}</Text>);
       }
       stats.push(
-        <Text>
+        <Text key={`attr-${item.id}`}>
           {item.hasOwnProperty('atk') && `ATK ${item.atk}`}
           {item.hasOwnProperty('atk') && item.hasOwnProperty('def') && ' / '}
           {item.hasOwnProperty('def') && `DEF ${item.def}`}
@@ -82,7 +82,6 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
 
     return (
       <TouchableOpacity
-        key={`card-${item.id}`}
         style={{
           flex: 1,
           flexDirection: 'row',
@@ -142,13 +141,7 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
           placeholder="search"></TextInput>
       </View>
       {cards?.length ? (
-        <FlatList
-          data={cards}
-          renderItem={renderCardRow}
-          keyExtractor={item => {
-            return item.id.toString();
-          }}
-        />
+        <FlatList data={cards} renderItem={renderCardRow} />
       ) : (
         <Text
           style={{
