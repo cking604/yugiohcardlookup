@@ -11,31 +11,12 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {debounceTime} from 'rxjs';
 import getCards from '../services/getCards';
 import useSubject from '../services/useRxSubject';
 import CardData from '../types/CardData';
 import {StackList} from '../types/StackList';
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 /**
  *  LISTING SCREEN
  * @returns
@@ -52,11 +33,13 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
   };
 
   useEffect(() => {
-    const unsub = rxSubject.pipe(debounceTime(1000)).subscribe(searchTerm => {
-      setSearch(searchTerm);
-    });
+    const subscriber = rxSubject
+      .pipe(debounceTime(1000))
+      .subscribe(searchTerm => {
+        setSearch(searchTerm);
+      });
     return () => {
-      unsub.unsubscribe();
+      subscriber.unsubscribe();
     };
   }, []);
 
@@ -71,18 +54,6 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
       subscriber.unsubscribe();
     };
   }, [search]);
-
-  const searchInput = () => {
-    return (
-      <TextInput
-        style={{borderWidth: 1, flex: 1, marginLeft: 8, paddingLeft: 8}}
-        onChangeText={text => {
-          rxSubject.next(text);
-          // setSearch(text);
-        }}
-        placeholder="search"></TextInput>
-    );
-  };
 
   const renderCardRow = ({item}: {item: Partial<CardData>}) => {
     let bgColour;
@@ -154,11 +125,21 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <View style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <View style={{flexDirection: 'row', padding: 8, borderBottomWidth: 1}}>
-        <View style={{width: 50, height: 50, backgroundColor: 'black'}} />
-        {searchInput()}
+        <TextInput
+          style={{
+            borderWidth: 1,
+            flex: 1,
+            marginHorizontal: 8,
+            padding: 12,
+            fontSize: 16,
+          }}
+          onChangeText={text => {
+            rxSubject.next(text);
+          }}
+          placeholder="search"></TextInput>
       </View>
       {cards?.length ? (
         <FlatList
@@ -179,7 +160,7 @@ const CardListingScreen = ({navigation}: CardListingScreenProp) => {
           No cards found
         </Text>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

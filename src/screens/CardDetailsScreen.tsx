@@ -8,7 +8,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import getCardById from '../services/getCardById';
 import {CardApiResponse} from '../types/CardApiResponse';
 import CardData from '../types/CardData';
@@ -50,7 +49,7 @@ const CardDetailsScreen = ({route, navigation}: CardDetailsScreenProp) => {
   }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <View style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       {cardData ? (
         <ScrollView style={{padding: 8, backgroundColor: bgColour}}>
@@ -169,7 +168,7 @@ const CardDetailsScreen = ({route, navigation}: CardDetailsScreenProp) => {
       ) : (
         <Text>loading</Text>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
