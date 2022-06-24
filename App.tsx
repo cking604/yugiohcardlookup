@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ReactElement, ReactNode} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -7,10 +7,10 @@ import CardDetailsScreen from './src/screens/CardDetailsScreen';
 import CardListingScreen from './src/screens/CardListingScreen';
 
 /**
- * APP
+ * Yugioh App
  * @returns
  */
-const App: () => ReactNode = () => {
+const App = (): ReactElement => {
   const Stack = createNativeStackNavigator();
 
   return (
